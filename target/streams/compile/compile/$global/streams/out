@@ -1,4 +1,9 @@
-[0m[[0m[31merror[0m] [0m[0m/home/tperc/IdeaProjects/untitled/src/main/scala/simGraphTest.scala:56:27: value broadcast is not a member of org.apache.spark.sql.SparkSession[0m
-[0m[[0m[31merror[0m] [0m[0m    val neighbors = spark.broadcast(1)[0m
-[0m[[0m[31merror[0m] [0m[0m                          ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/tperc/IdeaProjects/untitled/src/main/scala/simGraphTest.scala:64:32: overloaded method value filter with alternatives:[0m
+[0m[[0m[31merror[0m] [0m[0m  (func: org.apache.spark.api.java.function.FilterFunction[org.apache.spark.sql.Row])org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (func: org.apache.spark.sql.Row => Boolean)org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (conditionExpr: String)org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  (condition: org.apache.spark.sql.Column)org.apache.spark.sql.Dataset[org.apache.spark.sql.Row][0m
+[0m[[0m[31merror[0m] [0m[0m cannot be applied to (Boolean)[0m
+[0m[[0m[31merror[0m] [0m[0m    val filtNeighborDF = simDF.filter("src" < "dst")[0m
+[0m[[0m[31merror[0m] [0m[0m                               ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m
