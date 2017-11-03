@@ -68,15 +68,19 @@ object SimpleApp {
     val filtgrpNeighbors = filtNeighborDF.groupBy("src").agg(collect_list("dst")).show()
 
     //hard coded creating the neighbors table to be braodcasted at the moment
-    val nbers2dmat = Array.ofDim[Array[Int]](4,2)
+    val nbers2dmat = Array.ofDim[Array[Int]](6,2)
     nbers2dmat(0)(0) = Array(1)
     nbers2dmat(1)(0) = Array(2)
     nbers2dmat(2)(0) = Array(3)
     nbers2dmat(3)(0) = Array(4)
-    nbers2dmat(0)(1) = Array(2,3,4)
-    nbers2dmat(1)(1) = Array(1,3)
-    nbers2dmat(2)(1) = Array(1,2)
-    nbers2dmat(3)(1) = Array(1)
+    nbers2dmat(4)(0) = Array(5)
+    nbers2dmat(5)(0) = Array(6)
+    nbers2dmat(0)(1) = Array(2,3,4,5,6)
+    nbers2dmat(1)(1) = Array(1,5)
+    nbers2dmat(2)(1) = Array(1,4)
+    nbers2dmat(3)(1) = Array(1,3)
+    nbers2dmat(4)(1) = Array(1,2)
+    nbers2dmat(5)(1) = Array(1)
 
     val neighbors = spark.sparkContext.broadcast(nbers2dmat)
 
@@ -92,21 +96,22 @@ object SimpleApp {
       var flag = true
       val neighborRow = neighbors.value(cliqueS-1)
       for (neighbor <- neighborRow(1)) {
-        println("current nb "+ neighbor)
-        flag = true
-        for (i <- 0 to counter-1) {
-          println("if " + neighbors.value(neighbor-1)(1).deep.mkString(", ") + " contains " + cliqueArr(i))
-          if (neighbors.value(neighbor-1)(1).contains(cliqueArr(i))) {
-            // do nothing
-          } else {
-            flag = false
+        //if (neighbor > cliqueS) {
+          println("current nb " + neighbor)
+          flag = true
+          for (i <- 0 to counter - 1) {
+            println("if " + neighbors.value(neighbor - 1)(1).deep.mkString(", ") + " contains " + cliqueArr(i))
+            if (neighbors.value(neighbor - 1)(1).contains(cliqueArr(i))) {
+              // do nothing
+            } else {
+              flag = false
+            }
           }
-        }
-        if (flag == true) {
-          cliqueArr += neighbor
-          counter += 1
-        }
-
+          if (flag == true) {
+            cliqueArr += neighbor
+            counter += 1
+          }
+        //}
       }
 
       println(cliqueArr.toString())
