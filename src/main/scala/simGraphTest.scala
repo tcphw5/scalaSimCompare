@@ -1,3 +1,5 @@
+import java.io.{File, PrintWriter}
+
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkConf
@@ -9,6 +11,7 @@ import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.functions.udf
 import org.apache.spark.sql.functions._
 import scala.collection.mutable.ArrayBuffer
+import java.io
 import scala.util.control.Breaks._
 //import org.saddle._
 
@@ -89,34 +92,118 @@ object SimpleApp {
     def cliqueFinder(cliqueStart:Any) : Array[Int] = {
       val csString = cliqueStart.toString.trim
       val cliqueS = Integer.parseInt(csString)
+      val cliqueArr = ArrayBuffer[Int]()
+      val cliqueReport = ArrayBuffer[Int]()
+      val filename = csString + "result.txt"
+      val writer = new PrintWriter(new File(filename))
+      cliqueArr += cliqueS
+
+      println("*******************Start of " + cliqueS + "*********")
+
+      val arr = cliqueFinderRec(cliqueStart, 1, cliqueArr, writer)
+      writer.close()
+      return arr
+    }
+
+    /*def cliqueFinderRec(cliqueStart:Any) : Array[Int] = {
+      val csString = cliqueStart.toString.trim
+      val cliqueS = Integer.parseInt(csString)
       var cliqueArr = ArrayBuffer[Int]()
       cliqueArr += cliqueS
       var counter = 1
       val maxN = 4
       var flag = true
-      val neighborRow = neighbors.value(cliqueS-1)
+      val neighborRow = neighbors.value(cliqueS - 1)
       for (neighbor <- neighborRow(1)) {
         //if (neighbor > cliqueS) {
-          println("current nb " + neighbor)
-          flag = true
-          for (i <- 0 to counter - 1) {
-            println("if " + neighbors.value(neighbor - 1)(1).deep.mkString(", ") + " contains " + cliqueArr(i))
-            if (neighbors.value(neighbor - 1)(1).contains(cliqueArr(i))) {
-              // do nothing
-            } else {
-              flag = false
-            }
+        println("current nb " + neighbor)
+        flag = true
+        for (i <- 0 to counter - 1) {
+          println("if " + neighbors.value(neighbor - 1)(1).deep.mkString(", ") + " contains " + cliqueArr(i))
+          if (neighbors.value(neighbor - 1)(1).contains(cliqueArr(i))) {
+            // do nothing
+          } else {
+            flag = false
           }
-          if (flag == true) {
-            cliqueArr += neighbor
-            counter += 1
-          }
+        }
+        if (flag == true) {
+          cliqueArr += neighbor
+          counter += 1
+        }
         //}
       }
 
       println(cliqueArr.toString())
 
       return cliqueArr.sorted.toArray
+
+    }*/
+
+    def cliqueFinderRec(cliqueStart:Any, counter:Int, cliqueArr:ArrayBuffer[Int], writer: PrintWriter) : Array[Int] = {
+      val csString = cliqueStart.toString.trim
+      val cliqueS = Integer.parseInt(csString)
+      var varcounter = counter
+      val maxN = 6
+      var flag = true
+      var beforelen = 0
+      var afterlen = 0
+      var nextans = cliqueArr.sorted.toArray
+
+      if (varcounter > 6) {
+        println("Done:")
+        println(cliqueArr.toString())
+        return cliqueArr.sorted.toArray
+      }
+      println("Start of... " + cliqueS)
+
+      val neighborRow = neighbors.value(cliqueS-1)(1)
+
+      for (neighbor <- neighborRow) {
+        //if (neighbor > cliqueS) {
+        if (!cliqueArr.contains(neighbor)) {
+          println("current nb " + neighbor)
+          flag = true
+          for (i <- 0 to varcounter - 1) {
+            println("if " + neighbors.value(neighbor - 1)(1).deep.mkString(", ") + " contains " + cliqueArr(i))
+            if (neighbors.value(neighbor - 1)(1).contains(cliqueArr(i))) {
+              println("yes!")
+            } else {
+              flag = false
+              println("break")
+            }
+          }
+          if (flag == true) {
+            val toPass = cliqueArr.clone() += neighbor
+            //currentCliqueReport = cliqueArr.clone()
+            println("before rec call")
+            beforelen = cliqueArr.length
+            println(cliqueArr.toString())
+            //varcounter += 1
+            nextans = cliqueFinderRec(neighbor, varcounter + 1, toPass, writer)
+            println("after rec call")
+            println(cliqueArr.toString())
+            afterlen = cliqueArr.length
+            println("next result")
+            println(nextans.length)
+            //cliqueArr.trimEnd(1)
+          }
+        }
+      }
+
+      //println("complete clique")
+      //println(cliqueArr.toString())
+      if (beforelen == 0 && nextans.length > beforelen) {
+        //println(beforelen)
+        //println(afterlen)
+        //println(nextans.length)
+        println("THIS IS A REAL CLIQUE")
+        println(cliqueArr.toString())
+        writer.write(cliqueArr.toString())
+
+      }
+
+      return cliqueArr.sorted.toArray
+
     }
 
     val cftest = cliqueFinder _
