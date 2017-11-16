@@ -87,6 +87,39 @@ object SimpleApp {
 
     val neighbors = spark.sparkContext.broadcast(nbers2dmat)
 
+    def bkcaller(cliqueStart:Any) : Int = {
+      val R = Set.empty[Int]
+      val P = Set(1,2,3,4,5,6)
+      val X = Set.empty[Int]
+
+      bkCliqueFinder(R, P, X)
+
+      return 5
+    }
+
+    def bkCliqueFinder(R:Set[Int], P:Set[Int], X:Set[Int]) : Int = {
+      if (P.size == 0 && X.size == 0) {
+        println("Clique: " + R.toString())
+      }
+      else {
+        var Pcopy = P.map(x => x)
+        var Rcopy = R.map(x => x)
+        var Xcopy = X.map(x => x)
+
+        for (vertex <- Pcopy) {
+          val neighbs = neighbors.value(vertex-1)(1)
+
+          bkCliqueFinder(R + vertex, Pcopy.intersect(Set(neighbs: _*)), Xcopy.intersect(Set(neighbs: _*)))
+          Pcopy -= vertex
+          Xcopy = Xcopy + vertex
+        }
+      }
+
+      return 5
+    }
+
+
+
     //actual clique finding function
     //printlns inside used for testing
     def cliqueFinder(cliqueStart:Any) : Array[Int] = {
@@ -207,12 +240,18 @@ object SimpleApp {
     }
 
     val cftest = cliqueFinder _
+    val cftest2 = bkcaller _
+
+    val cfUDF2 = udf(cftest2)
 
     val cfUDF = udf(cftest)
     // make and show dataframe with column showing the clique starting from each node
     val ansDF = userDF.withColumn("test", cfUDF(userDF("UID")))
 
+    val ansDF2 = userDF.withColumn("test2", cfUDF2(userDF("UID")) )
+
     ansDF.show()
+    ansDF2.show()
 
     spark.stop()
   }
