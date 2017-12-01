@@ -88,18 +88,32 @@ object SimpleApp {
     val neighbors = spark.sparkContext.broadcast(nbers2dmat)
 
     def bkcaller(cliqueStart:Any) : Int = {
+      //Timing
+      val t0 = System.nanoTime()
+
       val R = Set.empty[Int]
       val P = Set(1,2,3,4,5,6)
       val X = Set.empty[Int]
+      val csString = cliqueStart.toString.trim
+      val cliqueS = Integer.parseInt(csString)
+      val filename = csString + "bkresult.txt"
+      val writer = new PrintWriter(new File(filename))
 
-      bkCliqueFinder(R, P, X)
+      println("start of " + cliqueS.toString())
+      bkCliqueFinder(R, P, X, cliqueS, writer)
+      writer.close()
+
+      val t1 = System.nanoTime()
+      println("Elapsed Time: " + (t1 - t0))
 
       return 5
     }
 
-    def bkCliqueFinder(R:Set[Int], P:Set[Int], X:Set[Int]) : Int = {
-      if (P.size == 0 && X.size == 0) {
+    def bkCliqueFinder(R:Set[Int], P:Set[Int], X:Set[Int], cliqueS:Int, writer: PrintWriter) : Int = {
+
+      if (P.size == 0 && X.size == 0 && R.contains(cliqueS)) {
         println("Clique: " + R.toString())
+        writer.write(R.toString())
       }
       else {
         var Pcopy = P.map(x => x)
@@ -109,8 +123,11 @@ object SimpleApp {
         for (vertex <- Pcopy) {
           val neighbs = neighbors.value(vertex-1)(1)
 
-          bkCliqueFinder(R + vertex, Pcopy.intersect(Set(neighbs: _*)), Xcopy.intersect(Set(neighbs: _*)))
+          bkCliqueFinder(R + vertex, Pcopy.intersect(Set(neighbs: _*)), Xcopy.intersect(Set(neighbs: _*)), cliqueS, writer)
           Pcopy -= vertex
+          if (vertex == cliqueS) {
+            return 5
+          }
           Xcopy = Xcopy + vertex
         }
       }
@@ -123,6 +140,8 @@ object SimpleApp {
     //actual clique finding function
     //printlns inside used for testing
     def cliqueFinder(cliqueStart:Any) : Array[Int] = {
+      //Timing
+      val t0 = System.nanoTime()
       val csString = cliqueStart.toString.trim
       val cliqueS = Integer.parseInt(csString)
       val cliqueArr = ArrayBuffer[Int]()
@@ -135,6 +154,8 @@ object SimpleApp {
 
       val arr = cliqueFinderRec(cliqueStart, 1, cliqueArr, writer)
       writer.close()
+      val t1 = System.nanoTime()
+      println("Elapsed Time: " + (t1 - t0))
       return arr
     }
 
@@ -194,30 +215,30 @@ object SimpleApp {
       for (neighbor <- neighborRow) {
         //if (neighbor > cliqueS) {
         if (!cliqueArr.contains(neighbor)) {
-          println("current nb " + neighbor)
+          //println("current nb " + neighbor)
           flag = true
           for (i <- 0 to varcounter - 1) {
-            println("if " + neighbors.value(neighbor - 1)(1).deep.mkString(", ") + " contains " + cliqueArr(i))
+            //println("if " + neighbors.value(neighbor - 1)(1).deep.mkString(", ") + " contains " + cliqueArr(i))
             if (neighbors.value(neighbor - 1)(1).contains(cliqueArr(i))) {
-              println("yes!")
+              //println("yes!")
             } else {
               flag = false
-              println("break")
+              //println("break")
             }
           }
           if (flag == true) {
             val toPass = cliqueArr.clone() += neighbor
             //currentCliqueReport = cliqueArr.clone()
-            println("before rec call")
+            //println("before rec call")
             beforelen = cliqueArr.length
-            println(cliqueArr.toString())
+            //println(cliqueArr.toString())
             //varcounter += 1
             nextans = cliqueFinderRec(neighbor, varcounter + 1, toPass, writer)
-            println("after rec call")
-            println(cliqueArr.toString())
+            //println("after rec call")
+            //println(cliqueArr.toString())
             afterlen = cliqueArr.length
-            println("next result")
-            println(nextans.length)
+            //println("next result")
+            //println(nextans.length)
             //cliqueArr.trimEnd(1)
           }
         }
