@@ -25,7 +25,7 @@ object SimpleApp {
 
     //files to be read in
     val inFile = "data.csv"
-    val inFile2 = "data2.csv"
+    val inFile2 = "genData2.csv"
 
     //next lines are to set up the spark application and the spark context
     val conf = new SparkConf().setAppName("testerProg").setMaster("local")
@@ -71,6 +71,37 @@ object SimpleApp {
     val filtgrpNeighbors = filtNeighborDF.groupBy("src").agg(collect_list("dst")).show()
 
     //hard coded creating the neighbors table to be braodcasted at the moment
+
+    var linecounter = 0
+
+    def readCSV() : Array[Array[Int]] = {
+      val bufferedSource = scala.io.Source.fromFile("genData.csv")
+      var nbers2dmat :Array[Array[Int]] = Array.empty
+      for (line <- bufferedSource.getLines()) {
+        linecounter += 1
+        val cols = line.split(" ").map(_.trim.toInt)
+        nbers2dmat = nbers2dmat :+ cols
+      }
+      bufferedSource.close()
+      return nbers2dmat
+    }
+
+    val nbers2dmat2 = readCSV()
+
+    val nbers2dmat3 = Array.ofDim[Array[Int]](linecounter,2)
+
+    for (i <- 0 to linecounter-1) {
+      nbers2dmat3(i)(0) = Array(i+1)
+      nbers2dmat3(i)(1) = nbers2dmat2(i)
+    }
+
+    //nbers2dmat2.foreach( x => println(x.mkString))
+    println(nbers2dmat3.deep.mkString("\n"))
+    //println(nbers2dmat2(0).mkString)
+    //println(nbers2dmat2(1)(0))
+    //println(nbers2dmat2(0)(1))
+
+
     val nbers2dmat = Array.ofDim[Array[Int]](6,2)
     nbers2dmat(0)(0) = Array(1)
     nbers2dmat(1)(0) = Array(2)
@@ -85,14 +116,14 @@ object SimpleApp {
     nbers2dmat(4)(1) = Array(1,2)
     nbers2dmat(5)(1) = Array(1)
 
-    val neighbors = spark.sparkContext.broadcast(nbers2dmat)
+    val neighbors = spark.sparkContext.broadcast(nbers2dmat3)
 
     def bkcaller(cliqueStart:Any) : Int = {
       //Timing
       val t0 = System.nanoTime()
 
       val R = Set.empty[Int]
-      val P = Set(1,2,3,4,5,6)
+      val P = (1 to 200).toSet
       val X = Set.empty[Int]
       val csString = cliqueStart.toString.trim
       val cliqueS = Integer.parseInt(csString)
@@ -112,8 +143,10 @@ object SimpleApp {
     def bkCliqueFinder(R:Set[Int], P:Set[Int], X:Set[Int], cliqueS:Int, writer: PrintWriter) : Int = {
 
       if (P.size == 0 && X.size == 0 && R.contains(cliqueS)) {
-        println("Clique: " + R.toString())
-        writer.write(R.toString())
+        if (R.size > 2) {
+          println("Clique: " + R.toString())
+          writer.write(R.toString())
+        }
       }
       else {
         var Pcopy = P.map(x => x)
@@ -197,17 +230,17 @@ object SimpleApp {
       val csString = cliqueStart.toString.trim
       val cliqueS = Integer.parseInt(csString)
       var varcounter = counter
-      val maxN = 6
+      val maxN = 5
       var flag = true
       var beforelen = 0
       var afterlen = 0
       var nextans = cliqueArr.sorted.toArray
-
-      if (varcounter > 6) {
+      /*
+      if (varcounter > 5) {
         println("Done:")
         println(cliqueArr.toString())
         return cliqueArr.sorted.toArray
-      }
+      }*/
       println("Start of... " + cliqueS)
 
       val neighborRow = neighbors.value(cliqueS-1)(1)
@@ -251,9 +284,10 @@ object SimpleApp {
         //println(afterlen)
         //println(nextans.length)
         println("THIS IS A REAL CLIQUE")
-        println(cliqueArr.toString())
-        writer.write(cliqueArr.toString())
-
+        if ( cliqueArr.length > 2) {
+          println(cliqueArr.toString())
+          writer.write(cliqueArr.toString())
+        }
       }
 
       return cliqueArr.sorted.toArray
@@ -271,7 +305,7 @@ object SimpleApp {
 
     val ansDF2 = userDF.withColumn("test2", cfUDF2(userDF("UID")) )
 
-    ansDF.show()
+    //ansDF.show()
     ansDF2.show()
 
     spark.stop()

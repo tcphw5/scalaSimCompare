@@ -1,11 +1,7 @@
-[0m[[0m[31merror[0m] [0m[0m/home/tperc/IdeaProjects/untitled/src/main/scala/simGraphTest.scala:112:54: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : Array[Int][0m
-[0m[[0m[31merror[0m] [0m[0m required: scala.collection.GenSet[Int][0m
-[0m[[0m[31merror[0m] [0m[0m          bkCliqueFinder(R + vertex, Pcopy.intersect(neighbs), Xcopy.intersect(neighbs))[0m
-[0m[[0m[31merror[0m] [0m[0m                                                     ^[0m
-[0m[[0m[31merror[0m] [0m[0m/home/tperc/IdeaProjects/untitled/src/main/scala/simGraphTest.scala:112:80: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : Array[Int][0m
-[0m[[0m[31merror[0m] [0m[0m required: scala.collection.GenSet[Int][0m
-[0m[[0m[31merror[0m] [0m[0m          bkCliqueFinder(R + vertex, Pcopy.intersect(neighbs), Xcopy.intersect(neighbs))[0m
-[0m[[0m[31merror[0m] [0m[0m                                                                               ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/tperc/IdeaProjects/untitled/src/main/scala/simGraphTest.scala:86:5: not found: value nbers2dmat2[0m
+[0m[[0m[31merror[0m] [0m[0m    nbers2dmat2 = readCSV()[0m
+[0m[[0m[31merror[0m] [0m[0m    ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/tperc/IdeaProjects/untitled/src/main/scala/simGraphTest.scala:88:13: not found: value nbers2dmat2[0m
+[0m[[0m[31merror[0m] [0m[0m    println(nbers2dmat2.toString())[0m
+[0m[[0m[31merror[0m] [0m[0m            ^[0m
 [0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
