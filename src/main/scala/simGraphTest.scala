@@ -15,6 +15,9 @@ import java.io
 import scala.util.control.Breaks._
 //import org.saddle._
 
+import org.apache.log4j.{Level, Logger}
+import org.apache.spark.sql.functions.{array, collect_list, lit, when}
+
 //there are a lot of imports for random stuff... some
 //were added during testing random stuff and could probably be removed
 
@@ -23,7 +26,17 @@ import scala.util.control.Breaks._
 object SimpleApp {
   def main(args: Array[String]): Unit = {
 
-    //files to be read in
+
+
+    Logger.getLogger("org").setLevel(Level.ERROR)
+    Logger.getLogger("akka").setLevel(Level.ERROR)
+
+    val inPeople = "genPpl.csv"
+
+
+
+
+    //files to be read in for clique finding
     val inFile = "data.csv"
     val inFile2 = "genData2.csv"
 
@@ -31,6 +44,53 @@ object SimpleApp {
     val conf = new SparkConf().setAppName("testerProg").setMaster("local")
     val spark = SparkSession.builder().appName("simpleApplication").getOrCreate()
     import spark.implicits._
+
+
+    val pplDF = spark.read
+                     .format("csv")
+                     .option("header", "true")
+                     .load(inPeople)
+
+    pplDF.show()
+
+    //how to make sure neighbors are counted with both IDs groups without having duplicates??
+    val newDf = pplDF.select('personID as "df1ID", 'traj as "df1traj").crossJoin(pplDF).where('df1ID =!= 'personID)
+
+    val levels = Seq(1, 2)
+    val levelsdf = levels.toDF("lvl")
+
+    val newerDF = newDf.crossJoin(levelsdf)
+
+    //newDf.show()
+    newerDF.show()
+
+
+
+
+    def tsimUDF(a:Any, b:Any, c:Any) : Float = {
+      val r = scala.util.Random
+      return r.nextFloat()
+    }
+
+    val tsimComp = tsimUDF _
+    val tsimCompUDF = udf(tsimComp)
+
+
+    val resultsdf = newerDF.withColumn("result", tsimCompUDF(newerDF("df1traj"), newerDF("traj"), newerDF("lvl")))
+
+    val combineLvlsDf = resultsdf.groupBy("df1ID", "personID").agg(sum("result"))
+
+    val aboveThreshDf = combineLvlsDf.where(combineLvlsDf("sum(result)") > 1)
+
+    aboveThreshDf.show()
+
+    //collect neighbors not working
+
+    val neighborGroups = aboveThreshDf.groupBy("df1ID").agg(collect_list("personID"))
+
+    neighborGroups.show()
+
+    /*
 
     //reading in from files using spark
     val simDF = spark.read
@@ -307,6 +367,11 @@ object SimpleApp {
 
     //ansDF.show()
     ansDF2.show()
+
+    ////
+    //END OF COMMENTED OUT OLD PROGRAM
+    ////
+    */
 
     spark.stop()
   }

@@ -1,7 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/home/tperc/IdeaProjects/untitled/src/main/scala/simGraphTest.scala:86:5: not found: value nbers2dmat2[0m
-[0m[[0m[31merror[0m] [0m[0m    nbers2dmat2 = readCSV()[0m
-[0m[[0m[31merror[0m] [0m[0m    ^[0m
-[0m[[0m[31merror[0m] [0m[0m/home/tperc/IdeaProjects/untitled/src/main/scala/simGraphTest.scala:88:13: not found: value nbers2dmat2[0m
-[0m[[0m[31merror[0m] [0m[0m    println(nbers2dmat2.toString())[0m
-[0m[[0m[31merror[0m] [0m[0m            ^[0m
-[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/tpmac/Documents/scala/src/main/scala/simGraphTest.scala:88:20: value show is not a member of org.apache.spark.sql.RelationalGroupedDataset[0m
+[0m[[0m[31merror[0m] [0m[0m    neighborGroups.show()[0m
+[0m[[0m[31merror[0m] [0m[0m                   ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m
