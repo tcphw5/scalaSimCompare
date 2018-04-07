@@ -1,4 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/tpmac/Documents/scala/src/main/scala/simGraphTest.scala:88:20: value show is not a member of org.apache.spark.sql.RelationalGroupedDataset[0m
-[0m[[0m[31merror[0m] [0m[0m    neighborGroups.show()[0m
-[0m[[0m[31merror[0m] [0m[0m                   ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/tpmac/IdeaProjects/scalaSimCompare/src/main/scala/simGraphTest.scala:109:5: not found: value neighorGroupsDF[0m
+[0m[[0m[31merror[0m] [0m[0m    neighorGroupsDF.show()[0m
+[0m[[0m[31merror[0m] [0m[0m    ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m
