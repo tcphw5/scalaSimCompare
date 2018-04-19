@@ -305,6 +305,14 @@ public class simCompareV2 {
       if(ogPers[i] == 4 || ogPers[i] == 5) {
         shiftPers[i] = 12;
       }
+
+      if(ogPers[i] == 6 || ogPers[i] == 7) {
+        shiftPers[i] = 13;
+      }
+
+      if(ogPers[i] == 8 || ogPers[i] == 9) {
+        shiftPers[i] = 14;
+      }
     }
 
     return shiftPers;
