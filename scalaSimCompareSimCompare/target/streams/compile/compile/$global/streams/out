@@ -1,0 +1,4 @@
+[0m[[0m[31merror[0m] [0m[0m/Users/tpmac/IdeaProjects/scalaSimCompare/src/main/scala/simGraphTest.scala:250:25: too many arguments for method bkCliqueFinder: (R: Set[Int], P: Set[Int], X: Set[Int], cliqueS: Int)Int[0m
+[0m[[0m[31merror[0m] [0m[0m          bkCliqueFinder(R + vertex, Pcopy.intersect(Set(neighbs: _*)), Xcopy.intersect(Set(neighbs: _*)), cliqueS, writer)[0m
+[0m[[0m[31merror[0m] [0m[0m                        ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

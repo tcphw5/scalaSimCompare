@@ -1,0 +1,4 @@
+[0m[[0m[31merror[0m] [0m[0m/Users/tpmac/IdeaProjects/scalaSimCompare/src/main/scala/simGraphTest.scala:281:5: not found: value ansDF[0m
+[0m[[0m[31merror[0m] [0m[0m    ansDF.show(25000)[0m
+[0m[[0m[31merror[0m] [0m[0m    ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

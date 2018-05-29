@@ -1,0 +1,33 @@
+[0m[[0m[0minfo[0m] [0m[0mPackaging /Users/tpmac/IdeaProjects/scalaSimCompare/target/scala-2.11/simple-project_2.11-0.1.jar ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SimpleApp$$anonfun$2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/tpmac/IdeaProjects/scalaSimCompare/target/scala-2.11/classes/SimpleApp$$anonfun$2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	simcompare/simCompareV2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/tpmac/IdeaProjects/scalaSimCompare/target/scala-2.11/classes/simcompare/simCompareV2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SimpleApp$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/tpmac/IdeaProjects/scalaSimCompare/target/scala-2.11/classes/SimpleApp$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	simCompare.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/tpmac/IdeaProjects/scalaSimCompare/target/scala-2.11/classes/simCompare.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SimpleApp$$anonfun$SimpleApp$$bkCliqueFinder$1$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/tpmac/IdeaProjects/scalaSimCompare/target/scala-2.11/classes/SimpleApp$$anonfun$SimpleApp$$bkCliqueFinder$1$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SimpleApp$$anonfun$readCSV$1$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/tpmac/IdeaProjects/scalaSimCompare/target/scala-2.11/classes/SimpleApp$$anonfun$readCSV$1$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SimpleApp$$anonfun$findRow$1$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/tpmac/IdeaProjects/scalaSimCompare/target/scala-2.11/classes/SimpleApp$$anonfun$findRow$1$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SimpleApp$$anonfun$4.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/tpmac/IdeaProjects/scalaSimCompare/target/scala-2.11/classes/SimpleApp$$anonfun$4.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	generatePeople.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/tpmac/IdeaProjects/scalaSimCompare/target/scala-2.11/classes/generatePeople.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SimpleApp$$anonfun$readCSV$1$1$$anonfun$apply$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/tpmac/IdeaProjects/scalaSimCompare/target/scala-2.11/classes/SimpleApp$$anonfun$readCSV$1$1$$anonfun$apply$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	simCompareNP.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/tpmac/IdeaProjects/scalaSimCompare/target/scala-2.11/classes/simCompareNP.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SimpleApp$$anonfun$3.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/tpmac/IdeaProjects/scalaSimCompare/target/scala-2.11/classes/SimpleApp$$anonfun$3.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	simcompare[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/tpmac/IdeaProjects/scalaSimCompare/target/scala-2.11/classes/simcompare[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SimpleApp$$anonfun$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/tpmac/IdeaProjects/scalaSimCompare/target/scala-2.11/classes/SimpleApp$$anonfun$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SimpleApp.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/tpmac/IdeaProjects/scalaSimCompare/target/scala-2.11/classes/SimpleApp.class[0m
+[0m[[0m[0minfo[0m] [0m[0mDone packaging.[0m
